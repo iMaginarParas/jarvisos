@@ -8,7 +8,7 @@ from datetime import datetime
 
 load_dotenv()
 
-app = Flask(__name__, static_folder='.')
+app = Flask(__name__, static_folder='frontend')
 CORS(app)
 
 # Initialize ElevenLabs client
@@ -109,7 +109,11 @@ def process_voice_command(command):
 
 @app.route('/')
 def index():
-    return send_from_directory('.', 'index.html')
+    return send_from_directory('frontend', 'index.html')
+
+@app.route('/<path:path>')
+def serve_static(path):
+    return send_from_directory('frontend', path)
 
 @app.route('/api/process-command', methods=['POST'])
 def process_command():
