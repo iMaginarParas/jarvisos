@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voice E-Commerce Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>🛒 Voice E-Commerce Assistant</h1>
+            <p class="subtitle">Control your shopping with voice commands</p>
+        </header>
+
+        <div class="main-content">
+            <!-- Voice Control Section -->
+            <div class="voice-section">
+                <div class="microphone-container">
+                    <button id="voiceBtn" class="voice-btn">
+                        <svg width="50" height="50" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                            <line x1="12" y1="19" x2="12" y2="23"></line>
+                            <line x1="8" y1="23" x2="16" y2="23"></line>
+                        </svg>
+                    </button>
+                    <p class="voice-status" id="voiceStatus">Click to speak</p>
+                </div>
+
+                <div class="text-input-container">
+                    <input type="text" id="textCommand" placeholder="Or type your command here...">
+                    <button id="sendBtn" class="send-btn">Send</button>
+                </div>
+
+                <div class="response-container" id="responseContainer">
+                    <p class="response-text" id="responseText">Welcome! Try saying "help" to see available commands.</p>
+                </div>
+
+                <div class="quick-commands">
+                    <h3>Quick Commands:</h3>
+                    <div class="command-buttons">
+                        <button class="command-btn" data-command="list all products">Show Products</button>
+                        <button class="command-btn" data-command="show cart">View Cart</button>
+                        <button class="command-btn" data-command="help">Help</button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Products Display -->
+            <div class="products-section">
+                <h2>Available Products</h2>
+                <div id="productsContainer" class="products-grid">
+                    <!-- Products will be loaded here -->
+                </div>
+            </div>
+
+            <!-- Cart Display -->
+            <div class="cart-section">
+                <h2>Shopping Cart</h2>
+                <div id="cartContainer" class="cart-items">
+                    <p class="empty-message">Your cart is empty</p>
+                </div>
+                <div class="cart-total">
+                    <strong>Total: $<span id="cartTotal">0.00</span></strong>
+                </div>
+            </div>
+        </div>
+
+        <!-- Command History -->
+        <div class="history-section">
+            <h3>Command History</h3>
+            <div id="historyContainer" class="history-list">
+                <!-- Command history will appear here -->
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
