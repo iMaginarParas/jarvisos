@@ -1,14 +1,16 @@
-# Voice E-Commerce Assistant
+# JarvisOS — Voice Operations Dashboard
 
-A voice-controlled e-commerce platform with ElevenLabs text-to-speech integration. Control your online shopping experience using natural voice commands!
+JarvisOS is a voice-enabled operations dashboard for monitoring orders, catalog health, inventory, and completed assistant work. The dashboard pairs a live reporting view with natural voice and text commands, with optional ElevenLabs text-to-speech responses.
 
 ## Features
 
-- **Voice Commands**: Speak naturally to search products, manage cart, and checkout
+- **Operations Overview**: Monitor completed work, orders, catalog size, and inventory
+- **Reports**: Review order value and seven-day order activity
+- **Work Done**: Keep a local activity log of commands and their outcomes
+- **Voice Commands**: Speak naturally to review reports, orders, inventory, and catalog
 - **Text-to-Speech**: AI-powered voice responses using ElevenLabs
-- **Real-time Updates**: Live product catalog and cart management
-- **Beautiful UI**: Modern, responsive interface with gradient design
-- **Command History**: Track all your interactions
+- **Live Data**: Dashboard reports use the products, cart, and orders served by Flask
+- **Responsive Admin UI**: Dark JarvisOS workspace for desktop and mobile
 
 ## Voice Commands
 
@@ -18,6 +20,8 @@ A voice-controlled e-commerce platform with ElevenLabs text-to-speech integratio
 - `"checkout"` - Place your order
 - `"list all products"` - See all available products
 - `"view orders"` - Check order history
+- `"generate sales report"` - Summarize order count and total order value
+- `"check inventory"` - Summarize stock across the catalog
 - `"clear cart"` - Empty your cart
 - `"help"` - Get list of available commands
 
@@ -64,10 +68,10 @@ Visit `http://localhost:5000` in your browser.
 
 ```
 jarvisos/
-├── main.py              # Flask backend with e-commerce logic
-├── index.html           # Frontend interface
-├── styles.css           # Styling
-├── script.js            # Voice recognition and API calls
+├── main.py              # Flask backend and command handlers
+├── frontend/index.html  # JarvisOS dashboard
+├── frontend/styles.css  # Dashboard styling
+├── frontend/script.js   # Voice commands, reports, and activity log
 ├── requirements.txt     # Python dependencies
 ├── railway.json         # Railway deployment config
 ├── .env.example         # Environment variables template

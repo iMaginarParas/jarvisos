@@ -30,6 +30,42 @@ def process_voice_command(command):
     """Process voice commands and return appropriate response"""
     command = command.lower()
 
+    # Keep specific intents ahead of broad product searches so phrases such
+    # as "show cart" and "show orders" reach the right handler.
+    if "report" in command or "sales" in command:
+        total = sum(order["total"] for order in orders)
+        return {
+            "success": True,
+            "message": f"Sales report: {len(orders)} order(s) with total order value of ${total:.2f}.",
+            "data": {"order_count": len(orders), "total": total, "orders": orders},
+        }
+
+    if "inventory" in command or "stock" in command:
+        stock_total = sum(product["stock"] for product in products)
+        low_stock = [product["name"] for product in products if product["stock"] < 20]
+        response = f"Inventory report: {stock_total} units across {len(products)} products."
+        if low_stock:
+            response += " Low stock: " + ", ".join(low_stock) + "."
+        return {"success": True, "message": response, "data": {"total_stock": stock_total, "products": products}}
+
+    if "clear cart" in command or "empty cart" in command:
+        cart.clear()
+        return {"success": True, "message": "Your cart has been cleared.", "data": []}
+
+    if "cart" in command and "add" not in command:
+        if not cart:
+            return {"success": True, "message": "Your cart is empty.", "data": []}
+        total = sum(item["price"] for item in cart)
+        response = f"You have {len(cart)} item(s) in your cart. "
+        response += ", ".join([item["name"] for item in cart])
+        response += f". Total: ${total:.2f}"
+        return {"success": True, "message": response, "data": {"items": cart, "total": total}}
+
+    if "orders" in command or "order history" in command:
+        if not orders:
+            return {"success": True, "message": "You have no previous orders.", "data": []}
+        return {"success": True, "message": f"You have {len(orders)} order(s).", "data": orders}
+
     # Search products
     if "search" in command or "find" in command or "show" in command:
         keywords = command.split()
@@ -54,21 +90,6 @@ def process_voice_command(command):
                 cart.append(product)
                 return {"success": True, "message": f"Added {product['name']} to your cart for ${product['price']}", "data": cart}
         return {"success": False, "message": "Product not found. Please specify the product name.", "data": []}
-
-    # View cart
-    elif "cart" in command or "show cart" in command:
-        if not cart:
-            return {"success": True, "message": "Your cart is empty.", "data": []}
-        total = sum(item["price"] for item in cart)
-        response = f"You have {len(cart)} item(s) in your cart. "
-        response += ", ".join([item["name"] for item in cart])
-        response += f". Total: ${total:.2f}"
-        return {"success": True, "message": response, "data": {"items": cart, "total": total}}
-
-    # Clear cart
-    elif "clear cart" in command or "empty cart" in command:
-        cart.clear()
-        return {"success": True, "message": "Your cart has been cleared.", "data": []}
 
     # Checkout
     elif "checkout" in command or "place order" in command:
